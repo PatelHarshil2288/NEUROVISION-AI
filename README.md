@@ -44,6 +44,12 @@ Print local environment and checkpoint diagnostics with:
 python -m neurovision --diagnostics
 ```
 
+Print the installed package version with:
+
+```bash
+python -m neurovision --version
+```
+
 ## Windows release
 
 Push a version tag to build a standalone Windows executable:

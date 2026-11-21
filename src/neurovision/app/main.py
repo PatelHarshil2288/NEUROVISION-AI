@@ -5,12 +5,14 @@ import platform
 import sys
 from pathlib import Path
 
-from PySide6.QtWidgets import QApplication
-
-from neurovision.app.main_window import MainWindow
-
 
 def main() -> int:
+    if '--version' in sys.argv:
+        from neurovision import __version__
+
+        print(__version__)
+        return 0
+
     if '--diagnostics' in sys.argv:
         import torch
         from PySide6 import __version__ as pyside_version
@@ -30,6 +32,10 @@ def main() -> int:
             'checkpoint_exists': checkpoint.is_file(),
         }, indent=2))
         return 0
+
+    from PySide6.QtWidgets import QApplication
+
+    from neurovision.app.main_window import MainWindow
 
     app = QApplication(sys.argv)
     window = MainWindow()

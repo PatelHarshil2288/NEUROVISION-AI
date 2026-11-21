@@ -132,3 +132,13 @@ def test_diagnostics_mode_returns_json(monkeypatch, capsys) -> None:
     assert payload['python']
     assert payload['torch']
     assert isinstance(payload['checkpoint_exists'], bool)
+
+
+def test_version_mode_prints_package_version(monkeypatch, capsys) -> None:
+    from neurovision import __version__
+    from neurovision.app.main import main
+
+    monkeypatch.setattr(sys, 'argv', ['neurovision', '--version'])
+
+    assert main() == 0
+    assert capsys.readouterr().out.strip() == __version__

@@ -74,3 +74,20 @@ def test_topk_edges_are_globally_capped_by_weight_magnitude() -> None:
 
     assert edges.shape == (2, 2)
     assert set(map(tuple, edges.tolist())) == {(0, 0), (0, 1)}
+
+
+def test_forward_result_shapes_and_probabilities() -> None:
+    cfg = MLPConfig()
+    torch.manual_seed(0)
+    model = MLP(cfg)
+    image = np.zeros((28, 28), dtype=np.float32)
+
+    result = forward_with_telemetry_model(model, image)
+
+    assert result.logits.shape == (10,)
+    assert result.probabilities.shape == (10,)
+    assert np.isclose(result.probabilities.sum(), 1.0)
+    assert result.image_flat.shape == (784,)
+    assert result.h1_activation.shape == (128,)
+    assert result.h2_activation.shape == (64,)
+    assert len(result.events) == 3

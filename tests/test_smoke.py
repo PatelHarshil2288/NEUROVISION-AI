@@ -91,3 +91,29 @@ def test_forward_result_shapes_and_probabilities() -> None:
     assert result.h1_activation.shape == (128,)
     assert result.h2_activation.shape == (64,)
     assert len(result.events) == 3
+
+
+def test_training_improves_accuracy_on_separable_digits() -> None:
+    torch.manual_seed(7)
+    left = torch.zeros(32, 1, 28, 28)
+    right = torch.zeros(32, 1, 28, 28)
+    left[:, :, 8:20, 4:12] = 1.0
+    right[:, :, 8:20, 16:24] = 1.0
+
+    x = torch.cat([left, right])
+    y = torch.cat([torch.zeros(32, dtype=torch.long), torch.ones(32, dtype=torch.long)])
+    data = TensorDataset(x, y)
+    loader = DataLoader(data, batch_size=16, shuffle=True)
+
+    model = MLP(MLPConfig(output_dim=2))
+    train_epochs(
+        model=model,
+        train_dl=loader,
+        test_dl=loader,
+        device=torch.device('cpu'),
+        epochs=10,
+        lr=1e-2,
+    )
+
+    accuracy = evaluate_accuracy(model, loader, torch.device('cpu'))
+    assert accuracy >= 0.95

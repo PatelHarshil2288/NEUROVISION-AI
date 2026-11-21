@@ -225,3 +225,24 @@ def test_version_mode_prints_package_version(monkeypatch, capsys) -> None:
 
     assert main() == 0
     assert capsys.readouterr().out.strip() == __version__
+
+
+def test_digit_canvas_click_draws_ink(monkeypatch) -> None:
+    monkeypatch.setenv('QT_QPA_PLATFORM', 'offscreen')
+
+    from PySide6.QtCore import QPoint, Qt
+    from PySide6.QtTest import QTest
+    from PySide6.QtWidgets import QApplication
+
+    from neurovision.app.digit_studio import DigitCanvas
+
+    app = QApplication.instance() or QApplication([])
+    canvas = DigitCanvas(size_px=80)
+    canvas.show()
+    app.processEvents()
+
+    QTest.mouseClick(canvas, Qt.LeftButton, pos=QPoint(40, 40))
+    app.processEvents()
+
+    assert float(canvas.to_ink_numpy().max()) > 0.99
+    canvas.close()

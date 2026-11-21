@@ -62,7 +62,19 @@ class DigitCanvas(QWidget):
     def mousePressEvent(self, event: QMouseEvent) -> None:
         if event.button() != Qt.LeftButton:
             return
-        self._last = event.position().toPoint()
+        pos = event.position().toPoint()
+
+        painter = QPainter(self._img)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+        painter.setPen(Qt.NoPen)
+        painter.setBrush(QColor(0, 0, 0))
+        radius = self._pen.width() // 2
+        painter.drawEllipse(pos, radius, radius)
+        painter.end()
+
+        self._last = pos
+        self.changed.emit()
+        self.update()
 
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
         if self._last is None:

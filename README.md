@@ -47,6 +47,16 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
+## Verify a Windows release
+
+With both release files downloaded:
+
+```powershell
+.\scripts\verify_release.ps1 `
+  -ZipPath .\NeurovisionAI-Windows.zip `
+  -ChecksumJsonPath .\NeurovisionAI-Windows.zip.sha256.json
+```
+
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
 4) Run tests:

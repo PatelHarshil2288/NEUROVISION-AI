@@ -29,9 +29,16 @@ jobs:
 
       - name: Package executable
         shell: pwsh
-        run: Compress-Archive -Path dist/NeurovisionAI.exe -DestinationPath NeurovisionAI-Windows.zip
+        run: |
+          Compress-Archive -Path dist/NeurovisionAI.exe -DestinationPath NeurovisionAI-Windows.zip
+          Get-FileHash NeurovisionAI-Windows.zip -Algorithm SHA256 |
+            Select-Object -Property @{Name="sha256";Expression={$_.Hash.ToLower()}},Path |
+            ConvertTo-Json |
+            Set-Content NeurovisionAI-Windows.zip.sha256.json
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          files: NeurovisionAI-Windows.zip
+          files: |
+            NeurovisionAI-Windows.zip
+            NeurovisionAI-Windows.zip.sha256.json

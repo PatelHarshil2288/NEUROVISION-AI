@@ -38,6 +38,15 @@ An installed package can also be launched with:
 neurovision
 ```
 
+## Windows release
+
+Push a version tag to build a standalone Windows executable:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
 4) Run tests:

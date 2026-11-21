@@ -75,6 +75,10 @@ See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and validation guidance.
 
+## Code of Conduct
+
+Participation is governed by [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
 The trained checkpoint is included in packaged releases and does not require a separate download.

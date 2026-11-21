@@ -1,5 +1,7 @@
 ﻿import numpy as np
 import torch
+import json
+import sys
 from torch.utils.data import DataLoader, TensorDataset
 
 from neurovision.digit.preprocess import canvas_to_mnist
@@ -117,3 +119,16 @@ def test_training_improves_accuracy_on_separable_digits() -> None:
 
     accuracy = evaluate_accuracy(model, loader, torch.device('cpu'))
     assert accuracy >= 0.95
+
+
+def test_diagnostics_mode_returns_json(monkeypatch, capsys) -> None:
+    from neurovision.app.main import main
+
+    monkeypatch.setattr(sys, 'argv', ['neurovision', '--diagnostics'])
+
+    assert main() == 0
+
+    payload = json.loads(capsys.readouterr().out)
+    assert payload['python']
+    assert payload['torch']
+    assert isinstance(payload['checkpoint_exists'], bool)

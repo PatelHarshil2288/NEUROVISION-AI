@@ -67,6 +67,10 @@ With both release files downloaded:
 
 NEUROVISION-AI is released under the MIT License. See [LICENSE](LICENSE).
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
 The trained checkpoint is included in packaged releases and does not require a separate download.

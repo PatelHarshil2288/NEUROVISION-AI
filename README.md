@@ -38,6 +38,12 @@ An installed package can also be launched with:
 neurovision
 ```
 
+Print local environment and checkpoint diagnostics with:
+
+```bash
+python -m neurovision --diagnostics
+```
+
 ## Windows release
 
 Push a version tag to build a standalone Windows executable:

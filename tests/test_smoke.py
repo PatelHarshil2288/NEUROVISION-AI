@@ -23,6 +23,51 @@ def test_canvas_to_mnist_shape_and_range() -> None:
     assert float(mnist.max()) <= 1.0
 
 
+def test_canvas_to_mnist_centers_and_fits_ink() -> None:
+    canvas = np.zeros((280, 280), dtype=np.float32)
+    canvas[10:50, 20:60] = 1.0
+
+    mnist = canvas_to_mnist(canvas)
+    rows, cols = np.nonzero(mnist > 0.1)
+
+    assert rows.min() == 4
+    assert rows.max() == 23
+    assert cols.min() == 4
+    assert cols.max() == 23
+    assert abs(float(rows.mean()) - 13.5) < 0.1
+    assert abs(float(cols.mean()) - 13.5) < 0.1
+
+
+def test_canvas_to_mnist_preserves_empty_canvas() -> None:
+    canvas = np.zeros((280, 280), dtype=np.float32)
+
+    mnist = canvas_to_mnist(canvas)
+
+    assert not np.any(mnist)
+
+
+def test_canvas_to_mnist_preserves_aspect_ratio() -> None:
+    canvas = np.zeros((280, 280), dtype=np.float32)
+    canvas[50:70, 10:210] = 1.0
+
+    mnist = canvas_to_mnist(canvas)
+    rows, cols = np.nonzero(mnist > 0.1)
+
+    height = int(rows.max() - rows.min() + 1)
+    width = int(cols.max() - cols.min() + 1)
+    assert width >= height * 9
+    assert width <= 20
+
+
+def test_canvas_to_mnist_keeps_faint_ink() -> None:
+    canvas = np.zeros((280, 280), dtype=np.float32)
+    canvas[100:180, 100:180] = 0.01
+
+    mnist = canvas_to_mnist(canvas)
+
+    assert float(mnist.max()) == pytest.approx(1.0)
+
+
 def test_checkpoint_roundtrip(tmp_path) -> None:
     cfg = MLPConfig()
     torch.manual_seed(0)

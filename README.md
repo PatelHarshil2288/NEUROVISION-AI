@@ -110,6 +110,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting guidance.
 ## Digit Studio
 
 - Draw with left mouse button
+- Drawing preprocessing crops, aspect-fits, and centers ink in an MNIST-style 28x28 image
 - Click "Use Drawing For Inference" to feed it into the model
 
 ## Training Centre (MNIST)

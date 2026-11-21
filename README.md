@@ -2,6 +2,12 @@
 
 Interactive Neural Intelligence Laboratory (local-first).
 
+[![CI](https://github.com/PatelHarshil2288/NEUROVISION-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PatelHarshil2288/NEUROVISION-AI/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+Draw a digit, inspect the MLP forward pass, visualize neural activation in 3D, and train on MNIST without sending data off-device.
+
 ## Current Status (Phases 1–4)
 
 - PySide6 desktop shell launches.
@@ -50,6 +56,12 @@ Print the installed package version with:
 python -m neurovision --version
 ```
 
+4) Run tests:
+
+```bash
+python -m pytest -q
+```
+
 ## Windows release
 
 Push a version tag to build a standalone Windows executable:
@@ -89,16 +101,6 @@ Participation is governed by [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 See [SECURITY.md](SECURITY.md) for vulnerability reporting guidance.
 
-If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
-
-The trained checkpoint is included in packaged releases and does not require a separate download.
-
-4) Run tests:
-
-```bash
-pytest
-```
-
 ## Controls (3D)
 
 - Left-drag: orbit camera
@@ -116,6 +118,8 @@ pytest
 - Checkpoints are standard PyTorch `.pt` files
 - After training or loading a checkpoint, Digit Studio inference uses the updated model
 - Training status reports sample-weighted epoch-average loss and final test accuracy
+
+If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup. Packaged releases include the trained checkpoint, so a separate download is not required.
 
 ### Offline notes
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2
+
+- Improved Digit Studio with single-click drawing and centered, aspect-preserving MNIST preprocessing.
+- Added lightweight `--version` and JSON `--diagnostics` commands.
+- Improved training progress with sample-weighted epoch loss and model-mode preservation.
+- Added package metadata, community templates, policies, and automated dependency updates.
+- Expanded the regression suite to cover preprocessing, GUI events, training, and CLI behavior.
+
 ## 0.1.1
 
 - Bundled the trained MNIST checkpoint in source and Windows builds.

@@ -109,7 +109,7 @@ class TrainingCentre(QWidget):
                 device = torch.device('cpu')
 
                 def on_progress(p: TrainProgress) -> None:
-                    msg = f"epoch={p.epoch} step={p.step}/{p.steps_per_epoch} loss={p.train_loss:.4f}"
+                    msg = f"epoch={p.epoch} step={p.step}/{p.steps_per_epoch} avg_loss={p.train_loss:.4f}"
                     if p.test_accuracy is not None:
                         msg += f" test_acc={p.test_accuracy*100:.2f}%"
                     self.progress_message.emit(msg)

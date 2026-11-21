@@ -115,6 +115,7 @@ pytest
 - Click "Train on MNIST (CPU)" to download (first run) and train locally
 - Checkpoints are standard PyTorch `.pt` files
 - After training or loading a checkpoint, Digit Studio inference uses the updated model
+- Training status reports sample-weighted epoch-average loss and final test accuracy
 
 ### Offline notes
 

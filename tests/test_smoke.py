@@ -2,6 +2,7 @@
 import torch
 import json
 import sys
+import pytest
 from torch.utils.data import DataLoader, TensorDataset
 
 from neurovision.digit.preprocess import canvas_to_mnist
@@ -61,6 +62,88 @@ def test_train_loop_smoke() -> None:
 
     acc = evaluate_accuracy(model, test_dl, torch.device('cpu'))
     assert 0.0 <= acc <= 1.0
+
+
+def test_evaluate_accuracy_preserves_model_mode() -> None:
+    x = torch.randn(8, 1, 28, 28)
+    y = torch.randint(0, 10, (8,))
+    loader = DataLoader(TensorDataset(x, y), batch_size=4)
+    model = MLP(MLPConfig())
+
+    model.train()
+    evaluate_accuracy(model, loader, torch.device('cpu'))
+    assert model.training
+
+    model.eval()
+    evaluate_accuracy(model, loader, torch.device('cpu'))
+    assert not model.training
+
+
+def test_train_progress_uses_sample_weighted_epoch_loss(monkeypatch) -> None:
+    class FixedLoss:
+        def __init__(self) -> None:
+            self.values = iter([2.0, 6.0])
+
+        def __call__(self, logits: torch.Tensor, _labels: torch.Tensor) -> torch.Tensor:
+            return logits.sum() * 0.0 + next(self.values)
+
+    monkeypatch.setattr(torch.nn, 'CrossEntropyLoss', FixedLoss)
+
+    x = torch.zeros(4, 1, 28, 28)
+    y = torch.zeros(4, dtype=torch.long)
+    loader = DataLoader(TensorDataset(x, y), batch_size=3, shuffle=False)
+    progress = []
+
+    train_epochs(
+        model=MLP(MLPConfig(output_dim=2)),
+        train_dl=loader,
+        test_dl=None,
+        device=torch.device('cpu'),
+        epochs=1,
+        lr=1e-3,
+        on_progress=progress.append,
+    )
+
+    assert len(progress) == 1
+    assert progress[0].train_loss == pytest.approx(3.0)
+
+
+def test_train_loop_rejects_invalid_inputs() -> None:
+    x = torch.zeros(2, 1, 28, 28)
+    y = torch.zeros(2, dtype=torch.long)
+    loader = DataLoader(TensorDataset(x, y), batch_size=1)
+    model = MLP(MLPConfig(output_dim=2))
+
+    with pytest.raises(ValueError, match='epochs'):
+        train_epochs(
+            model=model,
+            train_dl=loader,
+            test_dl=None,
+            device=torch.device('cpu'),
+            epochs=0,
+            lr=1e-3,
+        )
+
+    with pytest.raises(ValueError, match='lr'):
+        train_epochs(
+            model=model,
+            train_dl=loader,
+            test_dl=None,
+            device=torch.device('cpu'),
+            epochs=1,
+            lr=0.0,
+        )
+
+    empty_loader = DataLoader(TensorDataset(torch.empty(0, 1, 28, 28), torch.empty(0, dtype=torch.long)))
+    with pytest.raises(ValueError, match='at least one batch'):
+        train_epochs(
+            model=model,
+            train_dl=empty_loader,
+            test_dl=None,
+            device=torch.device('cpu'),
+            epochs=1,
+            lr=1e-3,
+        )
 
 
 def test_topk_edges_are_globally_capped_by_weight_magnitude() -> None:

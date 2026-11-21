@@ -63,6 +63,10 @@ With both release files downloaded:
   -ChecksumJsonPath .\NeurovisionAI-Windows.zip.sha256.json
 ```
 
+## License
+
+NEUROVISION-AI is released under the MIT License. See [LICENSE](LICENSE).
+
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
 The trained checkpoint is included in packaged releases and does not require a separate download.

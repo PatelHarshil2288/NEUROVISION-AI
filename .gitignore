@@ -6,6 +6,9 @@ __pycache__/
 
 data/
 *.pt
+!data/
+!data/checkpoints/
+!data/checkpoints/mnist.pt
 
 .venv/
 venv/

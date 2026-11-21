@@ -59,6 +59,8 @@ With both release files downloaded:
 
 If `data/checkpoints/mnist.pt` exists, the app loads it automatically at startup.
 
+The trained checkpoint is included in packaged releases and does not require a separate download.
+
 4) Run tests:
 
 ```bash

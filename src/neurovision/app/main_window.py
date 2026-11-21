@@ -2,6 +2,7 @@
 
 from dataclasses import asdict
 from pathlib import Path
+import sys
 
 import numpy as np
 from PySide6.QtCore import Qt
@@ -42,9 +43,20 @@ class MainWindow(QMainWindow):
         self._state: ModelState | None = None
         data_dir = Path.cwd() / 'data'
 
+        bundle_dir = getattr(sys, '_MEIPASS', None)
+        bundled_checkpoint = (
+            Path(bundle_dir) / 'data' / 'checkpoints' / 'mnist.pt'
+            if bundle_dir
+            else None
+        )
+
         self._model_cfg = MLPConfig(input_dim=784, hidden1=128, hidden2=64, output_dim=10)
         self._model = self._new_model(self._model_cfg)
-        default_checkpoint = data_dir / 'checkpoints' / 'mnist.pt'
+        default_checkpoint = (
+            bundled_checkpoint
+            if bundled_checkpoint is not None and bundled_checkpoint.is_file()
+            else data_dir / 'checkpoints' / 'mnist.pt'
+        )
         if default_checkpoint.is_file():
             try:
                 self._model, self._model_cfg = load_checkpoint(default_checkpoint)

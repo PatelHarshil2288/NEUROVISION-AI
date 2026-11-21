@@ -8,7 +8,7 @@ a = Analysis(
     ["src/neurovision/__main__.py"],
     pathex=["src"],
     binaries=[],
-    datas=[],
+    datas=[("data/checkpoints/mnist.pt", "data/checkpoints")],
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},

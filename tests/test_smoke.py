@@ -272,6 +272,19 @@ def test_version_mode_prints_package_version(monkeypatch, capsys) -> None:
     assert capsys.readouterr().out.strip() == __version__
 
 
+def test_windowed_app_initializes_missing_standard_streams(monkeypatch) -> None:
+    from neurovision.app.main import main
+
+    monkeypatch.setattr(sys, 'argv', ['neurovision', '--version'])
+    monkeypatch.setattr(sys, 'stdout', None)
+    monkeypatch.setattr(sys, 'stderr', None)
+
+    assert main() == 0
+    assert sys.stdout is not None
+    assert sys.stderr is not None
+    sys.stderr.write('progress')
+
+
 def test_digit_canvas_click_draws_ink(monkeypatch) -> None:
     monkeypatch.setenv('QT_QPA_PLATFORM', 'offscreen')
 

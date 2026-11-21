@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3
+
+- Fixed MNIST download progress in windowed Windows builds when standard output streams are unavailable.
+- Added regression coverage for initializing missing standard streams.
+
 ## 0.1.2
 
 - Improved Digit Studio with single-click drawing and centered, aspect-preserving MNIST preprocessing.

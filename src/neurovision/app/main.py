@@ -1,12 +1,22 @@
 ﻿from __future__ import annotations
 
 import json
+import os
 import platform
 import sys
 from pathlib import Path
 
 
+def _ensure_stdio() -> None:
+    if sys.stdout is None:
+        sys.stdout = open(os.devnull, 'w', encoding='utf-8')
+    if sys.stderr is None:
+        sys.stderr = open(os.devnull, 'w', encoding='utf-8')
+
+
 def main() -> int:
+    _ensure_stdio()
+
     if '--version' in sys.argv:
         from neurovision import __version__
 

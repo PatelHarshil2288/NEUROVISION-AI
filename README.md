@@ -67,8 +67,8 @@ python -m pytest -q
 Push a version tag to build a standalone Windows executable:
 
 ```bash
-git tag v0.1.2
-git push origin v0.1.2
+git tag v0.1.3
+git push origin v0.1.3
 ```
 
 ## Verify a Windows release

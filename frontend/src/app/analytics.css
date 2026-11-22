@@ -1,0 +1,42 @@
+.analytics-section { margin-bottom: 18px; }
+.analytics-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.analytics-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.analytics-stats div { padding: 14px; border: 1px solid #263749; border-radius: 5px; }
+.analytics-stats strong, .analytics-stats span { display: block; }
+.analytics-stats strong { color: #a0f4f3; font-size: 19px; }
+.analytics-hash { overflow-wrap: anywhere; font-family: var(--font-mono); }
+.analytics-scroll { overflow-x: auto; }
+.analytics-matrix, .analytics-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.analytics-matrix { min-width: 550px; text-align: center; }
+.analytics-matrix caption { text-align: left; }
+.analytics-matrix th, .analytics-matrix td, .analytics-table th, .analytics-table td {
+  padding: 7px; border-bottom: 1px solid #263749;
+}
+.analytics-matrix .diagonal { color: #a0f4f3; background: #12363e; }
+.analytics-table { min-width: 420px; text-align: left; }
+.analytics-errors { display: grid; gap: 6px; max-height: 320px; overflow-y: auto; }
+.analytics-errors button, .analytics-button {
+  padding: 9px 12px; border: 1px solid #344b5a; border-radius: 5px;
+  background: #101f2a; color: #d3ebef; cursor: pointer; text-align: left;
+}
+.analytics-errors button:hover, .analytics-errors button[aria-pressed="true"], .analytics-button:hover {
+  border-color: #66e4e6; color: #a0f4f3;
+}
+.analytics-pixels { display: block; width: 140px; max-width: 100%; background: #070e17; image-rendering: pixelated; }
+.analytics-probabilities { list-style: none; padding: 0; }
+.analytics-probabilities li { display: grid; grid-template-columns: 20px 1fr 65px; gap: 8px; align-items: center; }
+.analytics-probabilities meter { width: 100%; }
+.comparison-import, .comparison-selectors label { display: grid; gap: 8px; }
+.comparison-import { max-width: 460px; margin: 14px 0; color: #a0f4f3; }
+.comparison-import input, .comparison-selectors select {
+  min-width: 0; padding: 9px; border: 1px solid #344b5a; border-radius: 5px;
+  background: #101f2a; color: #d3ebef;
+}
+.comparison-selectors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 16px 0; }
+.comparison-result { margin-top: 20px; padding-top: 14px; border-top: 1px solid #263749; }
+.analytics-button:disabled { cursor: not-allowed; opacity: 0.55; }
+@media (max-width: 760px) {
+  .analytics-grid { grid-template-columns: minmax(0, 1fr); }
+  .analytics-stats { grid-template-columns: 1fr; }
+  .comparison-selectors { grid-template-columns: minmax(0, 1fr); }
+}

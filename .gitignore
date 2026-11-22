@@ -4,13 +4,6 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
-data/
-*.pt
-!data/
-!data/checkpoints/
-!data/checkpoints/mnist.pt
-data/MNIST/
-
 .venv/
 venv/
 env/

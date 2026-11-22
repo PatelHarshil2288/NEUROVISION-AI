@@ -1,0 +1,64 @@
+.explorer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.explorer-panel {
+  min-width: 0;
+  padding: 22px;
+  color: #b7c8d7;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.explorer-panel h2 {
+  margin: 8px 0 16px;
+  color: #eef7fa;
+  font-size: 19px;
+}
+
+.explorer-panel h3 {
+  margin: 16px 0 8px;
+  color: #e5f2f6;
+  font-size: 13px;
+}
+
+.explorer-panel strong { color: #e5f2f6; }
+.explorer-equation { overflow-wrap: anywhere; color: #a0f4f3; font-family: var(--font-mono); }
+.explorer-sandbox { grid-column: 1 / -1; }
+.explorer-parameters { margin-top: 18px; }
+.explorer-select-label, .explorer-selectors label, .explorer-range { display: grid; gap: 5px; }
+.explorer-selectors, .explorer-ranked { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.explorer-selectors select, .explorer-select-label select {
+  min-height: 36px;
+  width: 100%;
+  padding: 0 8px;
+  border: 1px solid #344252;
+  border-radius: 5px;
+  background: #101925;
+  color: #e5f2f6;
+}
+.explorer-range-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.explorer-range { margin: 12px 0; }
+.explorer-range input { width: 100%; accent-color: #66e4e6; }
+.explorer-graph { margin: 12px 0; }
+.explorer-graph figcaption { color: #aebdcb; font-size: 10px; }
+.explorer-graph svg { display: block; width: 100%; max-height: 190px; }
+.explorer-axis { stroke: #536171; stroke-width: 1; }
+.explorer-graph text, .explorer-histogram text { fill: #aebdcb; font-size: 10px; }
+.explorer-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.explorer-stat-grid div { padding: 10px; border: 1px solid #263749; border-radius: 5px; }
+.explorer-stat-grid dd { margin: 3px 0 0; color: #a0f4f3; font-family: var(--font-mono); overflow-wrap: anywhere; }
+.explorer-histogram { width: 100%; max-height: 220px; }
+.explorer-table-wrap { max-height: 250px; overflow: auto; }
+.explorer-table-wrap table { width: 100%; border-collapse: collapse; }
+.explorer-table-wrap th, .explorer-table-wrap td { padding: 6px; border-bottom: 1px solid #263749; text-align: left; }
+.explorer-connection-list { padding-left: 20px; }
+.explorer-connection-list li { padding: 3px 0; }
+
+@media (max-width: 760px) {
+  .explorer-grid, .explorer-selectors, .explorer-ranked { grid-template-columns: minmax(0, 1fr); }
+  .explorer-sandbox { grid-column: auto; }
+  .explorer-range-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

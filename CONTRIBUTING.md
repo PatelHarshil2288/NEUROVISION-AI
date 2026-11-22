@@ -2,29 +2,29 @@
 
 ## Setup
 
-```bash
-python -m pip install -e .
-python -m pip install pytest
-```
+This repository contains separate web frontend and Python backend projects. Follow [backend setup](backend/README.md) and [frontend setup](frontend/README.md) for their respective dependencies.
 
 ## Validation
 
-Run before submitting changes:
+Run the relevant checks before submitting changes.
 
-```bash
-python -m pytest -q
-python -m compileall -q src tests
-python -m build
-```
-
-For Windows executable validation:
+From `backend`:
 
 ```powershell
-python -m PyInstaller neurovision.spec --clean --noconfirm
+python -m pytest
+```
+
+From `frontend`:
+
+```powershell
+npm run lint
+npm run typecheck
+npm test
+npm run build
 ```
 
 ## Pull requests
 
 - Keep changes focused and include tests for behavior changes.
-- Do not commit generated `data/`, `build/`, `dist/`, caches, or local checkpoints.
+- Do not commit generated backend data/checkpoints, frontend dependencies/build output, caches, or local environment files.
 - Use the `main` branch and describe the result, validation, and any platform limitations.

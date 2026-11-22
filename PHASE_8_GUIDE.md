@@ -60,7 +60,7 @@ Expected response:
 GET /api/v1/comparison/available-models
 ```
 
-Response includes all registered model checkpoints and their metadata.
+Lists evaluated models. `GET /api/v1/comparison/checkpoints` lists approved local checkpoint files from `backend/artifacts/`, `training-lab/`, and `models/`.
 
 #### Compare Model Reports
 ```bash
@@ -72,6 +72,19 @@ POST /api/v1/comparison/reports
   "model_b_name": "MNIST MLP v2"
 }
 ```
+
+#### Store and List Evaluation Reports
+```bash
+POST /api/v1/comparison/evaluation-reports
+GET  /api/v1/comparison/evaluation-reports
+```
+The POST accepts only `{"checkpoint_hash": "<sha256>"}` and evaluates an approved local checkpoint on the server against existing official MNIST test files. Client-generated report JSON is not accepted. The endpoint requires a direct loopback client and does not download data.
+
+#### Comparison History
+```bash
+GET /api/v1/comparison/reports
+```
+Each successful comparison is persisted in `backend/artifacts/comparison.sqlite3`. Comparisons are rejected when the reports do not identify the same dataset and split.
 
 #### Comparison Summary
 ```bash
@@ -100,11 +113,7 @@ print(comparison.summary)
 
 ### Integration with Frontend
 
-The frontend `/analytics` page can now:
-- Select from multiple stored evaluation reports
-- Display side-by-side metrics comparison
-- Show per-class performance differences
-- Visualize accuracy/loss improvements
+The frontend `/analytics` page evaluates approved checkpoints through the backend, selects two evaluated checkpoints, displays side-by-side accuracy/loss/F1 metrics, and restores comparison history after reload. Report and comparison persistence uses SQLite. The one-time migration command re-evaluates legacy report checkpoints and reconstructs comparison history; it never trusts imported metric values.
 
 ---
 

@@ -187,6 +187,10 @@ class MNISTTransformer(nn.Module):
     ) -> None:
         super().__init__()
         self.d_model = d_model
+        self.nhead = nhead
+        self.num_layers = num_layers
+        self.dim_feedforward = dim_feedforward
+        self.dropout = dropout
         
         # Embedding layer: project each pixel value to d_model dimensions
         self.embedding = nn.Linear(1, d_model)

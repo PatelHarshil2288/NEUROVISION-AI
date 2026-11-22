@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 import math
 
 import pytest
@@ -70,7 +70,7 @@ def sample_evaluation_report_a():
         dataset_split="official-test",
         dataset_images_sha256="b" * 64,
         dataset_labels_sha256="c" * 64,
-        generated_at=datetime.utcnow().isoformat() + "Z",
+        generated_at=datetime.now(timezone.utc).isoformat(),
         loss=0.08,
         accuracy=accuracy,
         precision_per_class=precision_per_class,
@@ -113,7 +113,7 @@ def sample_evaluation_report_b():
         dataset_split="official-test",
         dataset_images_sha256="b" * 64,
         dataset_labels_sha256="c" * 64,
-        generated_at=datetime.utcnow().isoformat() + "Z",
+        generated_at=datetime.now(timezone.utc).isoformat(),
         loss=0.065,
         accuracy=accuracy,
         precision_per_class=precision_per_class,
@@ -197,3 +197,22 @@ def test_model_comparison_summary(sample_evaluation_report_a, sample_evaluation_
     assert len(comparison.summary) > 50
     # Both models have perfect accuracy, so check for loss difference
     assert "loss" in comparison.summary.lower()
+
+
+def test_evaluation_reports_persist_and_reject_conflicting_checkpoint_data(
+    tmp_path,
+    sample_evaluation_report_a,
+):
+    """Saved reports survive store recreation and remain immutable per checkpoint."""
+    store = ModelComparisonStore(artifacts_dir=tmp_path)
+    store.save_report(sample_evaluation_report_a)
+
+    restarted_store = ModelComparisonStore(artifacts_dir=tmp_path)
+    reports = restarted_store.list_reports()
+    assert len(reports) == 1
+    assert reports[0].checkpoint_sha256 == sample_evaluation_report_a.checkpoint_sha256
+    assert restarted_store.get_report(sample_evaluation_report_a.checkpoint_sha256) == reports[0]
+
+    conflicting_report = sample_evaluation_report_a.model_copy(update={"loss": 0.5})
+    with pytest.raises(ValueError, match="different evaluation report"):
+        restarted_store.save_report(conflicting_report)

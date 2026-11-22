@@ -1,0 +1,96 @@
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.training-panel {
+  min-width: 0;
+  padding: 22px;
+  color: #b7c8d7;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.training-panel h2 {
+  margin: 8px 0 16px;
+  color: #eef7fa;
+  font-size: 19px;
+}
+
+.training-notice, .training-error {
+  padding: 12px;
+  border: 1px solid #795b36;
+  border-radius: 6px;
+  background: #211b16;
+  color: #ffce90;
+  overflow-wrap: anywhere;
+}
+
+.training-error {
+  border-color: #88465a;
+  color: #ffb9c9;
+}
+
+.training-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+
+.training-controls label {
+  display: grid;
+  gap: 4px;
+}
+
+.training-controls select {
+  min-width: 90px;
+  min-height: 34px;
+  border: 1px solid #344252;
+  border-radius: 5px;
+  background: #101925;
+  color: #e5f2f6;
+}
+
+.training-footnote {
+  color: #92a4b4;
+  font-size: 10px;
+}
+
+.training-panel progress {
+  width: 100%;
+  accent-color: #66e4e6;
+}
+
+.training-metrics {
+  display: grid;
+  gap: 8px;
+}
+
+.training-metrics div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #263749;
+}
+
+.training-metrics dd {
+  margin: 0;
+  color: #a0f4f3;
+  font-family: var(--font-mono);
+  text-align: right;
+}
+
+.training-chart { margin: 0; }
+.training-chart svg { width: 100%; max-height: 200px; }
+.training-chart figcaption { color: #b7c8d7; font-size: 10px; }
+.training-chart figcaption span:first-child { color: #66e4e6; }
+.training-chart figcaption span:nth-child(2) { color: #c2a8ff; }
+.training-table-wrap { overflow-x: auto; }
+.training-table-wrap table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+.training-table-wrap th, .training-table-wrap td { padding: 6px; border-bottom: 1px solid #263749; text-align: left; }
+
+@media (max-width: 760px) {
+  .training-grid { grid-template-columns: minmax(0, 1fr); }
+}
